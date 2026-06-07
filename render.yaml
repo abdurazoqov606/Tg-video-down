@@ -1,8 +1,23 @@
+# ═══════════════════════════════════════════════════════
+#  🚀 Tezda Yuklayman Bot — Render.com deployment config
+# ═══════════════════════════════════════════════════════
 services:
   - type: web
     name: tezda-yuklayman-bot
-    env: docker
+    env: python
     plan: free
+    region: frankfurt
+
+    # FFmpeg kerak — avval o'rnatib, keyin pip
+    buildCommand: "apt-get update -y && apt-get install -y ffmpeg && pip install -r requirements.txt"
+
+    startCommand: "python bot.py"
+
     healthCheckPath: /
-    autoDeploy: true
-    
+
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: PYTHONUNBUFFERED
+        value: "1"
+        
